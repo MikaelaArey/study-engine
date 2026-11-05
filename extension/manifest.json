@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Study Engine",
+  "version": "1.0.0",
+  "description": "A writing assistant that teaches. Spelling, grammar, clarity and tone checks, fact checks for research papers, and a study mode that asks instead of fixing.",
+  "minimum_chrome_version": "116",
+  "permissions": ["storage", "contextMenus"],
+  "host_permissions": ["https://api.anthropic.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Study Engine",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "lib/text.js",
+        "lib/rules.js",
+        "lib/settings.js",
+        "content/model.js",
+        "content/overlay.js",
+        "content/ui.js",
+        "content/session.js",
+        "content/glossary.js",
+        "content/main.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ]
+}

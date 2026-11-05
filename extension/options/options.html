@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Study Engine settings</title>
+<link rel="icon" href="../icons/icon32.png">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../pages.css">
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="2.8" rx="1.4" fill="#ffffff"/><rect x="4" y="10.6" width="12" height="2.8" rx="1.4" fill="#ffffff"/><rect x="4" y="15.7" width="7.5" height="2.8" rx="1.4" fill="#ffffff"/></svg></span>
+    <div class="top-title"><h1>Study Engine</h1><p>Settings</p></div>
+    <nav class="top-nav" aria-label="Sections">
+      <a href="#ai">AI and facts</a><a href="#writing">Writing</a><a href="#dictionary">Dictionary</a><a href="#glossary">Glossary</a><a href="#privacy">Privacy</a>
+    </nav>
+    <button class="btn btn-primary btn-sm" id="open-editor" type="button">Open the editor</button>
+  </div>
+</header>
+
+<main>
+  <section class="welcome" id="welcome" hidden>
+    <h2>Study Engine is on</h2>
+    <p>Spelling, grammar, clarity and word-choice checks work right away in text boxes on any site, with nothing sent anywhere. Add an Anthropic API key below to turn on AI checks: grammar in context, tone, fact checks for papers, and study mode’s questions.</p>
+  </section>
+
+  <section class="panel" id="ai" aria-labelledby="ai-h">
+    <div class="panel-head">
+      <div><h2 id="ai-h">AI checks with Claude</h2><p class="hint">Deeper checks than the built-in rules: grammar in context, tone, fact checks with sources, and study questions.</p></div>
+      <span class="pill pill-quiet" id="ai-pill"><i></i><span id="ai-pill-text">Checking…</span></span>
+    </div>
+
+    <div class="field">
+      <label for="key">Anthropic API key</label>
+      <div class="key-row">
+        <input class="input mono" id="key" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…">
+        <button class="btn" id="key-show" type="button" aria-pressed="false">Show</button>
+        <button class="btn btn-primary" id="key-save" type="button">Save key</button>
+      </div>
+      <p class="hint">Get a key at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener noreferrer">console.anthropic.com</a>. AI checks are billed to your Anthropic account. The key is kept in this browser only, where web pages can’t read it.</p>
+      <div class="key-saved" id="key-saved" hidden>
+        <span>Saved key: <code id="key-masked"></code></span>
+        <button class="btn btn-sm" id="key-test" type="button">Test connection</button>
+        <button class="btn btn-sm btn-danger" id="key-remove" type="button">Remove</button>
+      </div>
+      <div class="status" id="key-status" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="rows">
+      <label class="row"><span><b>Use AI checks</b><small>Off keeps everything on this device: only the built-in rules run.</small></span><input class="switch" type="checkbox" id="ai-enabled" role="switch"></label>
+      <label class="row"><span><b>Check as I write</b><small>Paragraphs are checked a moment after you pause. Off: only when you ask in the assistant panel.</small></span><input class="switch" type="checkbox" id="ai-auto" role="switch"></label>
+    </div>
+
+    <fieldset class="field">
+      <legend>Fact checks</legend>
+      <label class="radio"><input type="radio" name="facts" value="auto"><span><b>Automatically, in longer writing</b><small>Paragraphs with dates, numbers, names or claims are checked once you move on from them. Short messages aren’t.</small></span></label>
+      <label class="radio"><input type="radio" name="facts" value="manual"><span><b>Only when I click Check facts</b><small>In the assistant panel or the editor.</small></span></label>
+      <label class="radio"><input type="radio" name="facts" value="off"><span><b>Off</b></span></label>
+    </fieldset>
+    <label class="row"><span><b>Search the web to verify facts</b><small>Claude looks up claims and links its sources. Searches cost $10 per 1,000 on your Anthropic account. Off: Claude checks against what it already knows, and says so.</small></span><input class="switch" type="checkbox" id="ai-search" role="switch"></label>
+
+    <details class="field">
+      <summary>Models</summary>
+      <div class="models">
+        <label>Writing checks and grading answers <select class="select" id="m-writing"></select></label>
+        <label>Study questions and study guides <select class="select" id="m-study"></select></label>
+        <label>Fact checks <select class="select" id="m-facts"></select></label>
+      </div>
+      <p class="hint">Haiku keeps writing checks fast and cheap. Fact checks need a model that reasons well about sources.</p>
+    </details>
+
+    <p class="hint usage" id="usage"></p>
+  </section>
+
+  <section class="panel" id="writing" aria-labelledby="writing-h">
+    <div class="panel-head"><div><h2 id="writing-h">Writing</h2><p class="hint">These checks run in your browser on every keystroke.</p></div></div>
+    <fieldset class="field">
+      <legend>English</legend>
+      <div class="inline-radios">
+        <label class="radio"><input type="radio" name="dialect" value="en-US"><span><b>American</b></span></label>
+        <label class="radio"><input type="radio" name="dialect" value="en-GB"><span><b>British</b></span></label>
+      </div>
+    </fieldset>
+    <div class="rows">
+      <label class="row"><span><b>Show the Study Engine button in text boxes</b><small>Opens the assistant panel. Underlines show either way.</small></span><input class="switch" type="checkbox" id="show-badge" role="switch"></label>
+      <label class="row k-correctness"><span><b><i class="dot"></i>Correctness</b><small>Spelling, grammar and punctuation. Always on.</small></span><input class="switch" type="checkbox" checked disabled role="switch"></label>
+      <label class="row k-clarity"><span><b><i class="dot"></i>Clarity</b><small>Wordy phrases, redundancy, long sentences, passive voice.</small></span><input class="switch" type="checkbox" id="cat-clarity" role="switch"></label>
+      <label class="row k-engagement"><span><b><i class="dot"></i>Engagement</b><small>Weak words like “very good”, and clichés.</small></span><input class="switch" type="checkbox" id="cat-engagement" role="switch"></label>
+      <label class="row k-tone"><span><b><i class="dot"></i>Tone</b><small>Formality and confidence, for academic and professional goals.</small></span><input class="switch" type="checkbox" id="cat-tone" role="switch"></label>
+    </div>
+
+    <div class="field">
+      <h3>Goals by site</h3>
+      <p class="hint">Each site starts with a goal that fits it: Professional for email, Casual for chat, Academic for school sites, and General everywhere else. Change a site’s goal from its assistant panel, or here.</p>
+      <div class="list" id="goal-list"></div>
+    </div>
+
+    <details class="field">
+      <summary>Rules</summary>
+      <p class="hint">Turn off any built-in rule. Suggestions from the AI check aren’t affected.</p>
+      <div class="rules" id="rules"></div>
+    </details>
+  </section>
+
+  <section class="panel" id="study" aria-labelledby="study-h">
+    <div class="panel-head"><div><h2 id="study-h">Study mode</h2><p class="hint">On a site in study mode, Study Engine asks instead of fixing: questions about your reasoning, nudges toward the precise word, and fact checks you fix yourself. Spelling and grammar still get direct fixes. Turn it on for a site from the assistant panel or the toolbar button.</p></div></div>
+    <div class="list" id="study-list"></div>
+  </section>
+
+  <section class="panel" id="dictionary" aria-labelledby="dict-h">
+    <div class="panel-head"><div><h2 id="dict-h">Your dictionary <span class="count" id="dict-count"></span></h2><p class="hint">Words here are never marked as misspelled. Add one from any spelling card, or here.</p></div></div>
+    <form class="key-row" id="dict-form">
+      <input class="input" id="dict-word" placeholder="Add a word" autocomplete="off" spellcheck="false" maxlength="60" aria-label="Word to add">
+      <button class="btn btn-primary" type="submit">Add</button>
+    </form>
+    <div class="chips" id="dict-list"></div>
+  </section>
+
+  <section class="panel" id="glossary" aria-labelledby="gl-h">
+    <div class="panel-head">
+      <div><h2 id="gl-h">Glossary <span class="count" id="count"></span></h2><p class="hint">When you finish typing a term from your glossary, its definition appears at the cursor. Press Tab to insert it.</p></div>
+      <label class="row compact"><span><b>Show definitions</b></span><input class="switch" type="checkbox" id="gl-enabled" role="switch"></label>
+    </div>
+    <div class="actions-row">
+      <button id="import-btn" class="btn btn-soft" type="button">Import CSV…</button>
+      <input id="import-file" type="file" accept=".csv,text/csv" hidden>
+      <button id="export-btn" class="btn" type="button">Export CSV</button>
+      <span class="spacer"></span>
+      <button id="clear-btn" class="btn btn-danger" type="button">Delete all terms</button>
+    </div>
+    <p class="hint">Use a CSV file with the columns <code>term</code>, <code>definition</code> and, optionally, <code>notes</code>. Importing adds new terms and updates ones you have; it never removes any.</p>
+    <div id="io-status" class="status" role="status" aria-live="polite"></div>
+
+    <form id="add-form" class="add-grid" novalidate>
+      <label>Term <input class="input" type="text" name="term" autocomplete="off" maxlength="100"></label>
+      <label>Definition <textarea class="input" name="definition" rows="1"></textarea></label>
+      <label>Notes <span class="optional">(optional)</span> <textarea class="input" name="notes" rows="1"></textarea></label>
+      <button class="btn btn-primary" type="submit">Add term</button>
+    </form>
+    <div id="add-status" class="status" role="status" aria-live="polite"></div>
+
+    <div class="list-head">
+      <input id="search" class="input" type="search" placeholder="Search terms, definitions and notes" aria-label="Search the glossary" autocomplete="off">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <colgroup><col class="c-term"><col class="c-def"><col class="c-notes"><col class="c-actions"></colgroup>
+        <thead><tr><th scope="col">Term</th><th scope="col">Definition</th><th scope="col">Notes</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p id="empty" class="empty" hidden></p>
+  </section>
+
+  <section class="panel" id="sites" aria-labelledby="sites-h">
+    <div class="panel-head"><div><h2 id="sites-h">Sites where Study Engine is off</h2><p class="hint">Turn Study Engine off for a site from its toolbar button or assistant panel.</p></div>
+      <label class="row compact"><span><b>On everywhere else</b></span><input class="switch" type="checkbox" id="enabled" role="switch"></label></div>
+    <div class="list" id="site-list"></div>
+  </section>
+
+  <section class="panel privacy" id="privacy" aria-labelledby="privacy-h">
+    <h2 id="privacy-h">Privacy</h2>
+    <ul>
+      <li><b>On your device:</b> spelling, grammar and style rules, your dictionary, your glossary and the editor’s documents. These never leave your browser.</li>
+      <li><b>Sent to Anthropic, only with AI checks on:</b> the paragraph being checked, or the text you ask about. Study Engine sends it straight to Anthropic’s API with your key, and to nowhere else. See <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener noreferrer">Anthropic’s privacy policy</a>.</li>
+      <li><b>Never:</b> password fields, payment fields, or fields a site marks as off-limits for writing assistants. No analytics, no tracking, no ads.</li>
+    </ul>
+  </section>
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden>
+  <span id="toast-text"></span>
+  <button id="toast-undo" type="button">Undo</button>
+</div>
+
+<script src="../lib/text.js"></script>
+<script src="../lib/rules.js"></script>
+<script src="../lib/settings.js"></script>
+<script src="../lib/secrets.js"></script>
+<script src="glossary.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Study Engine</title>
+  <meta name="description" content="Study Engine: a writing assistant that teaches. Writing review, fact checks, Socratic questions, study guides from your notes, vocabulary coaching and exam rehearsal.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="../icons/icon32.png">
+  <link rel="stylesheet" href="../fonts/fonts.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="2.8" rx="1.4" fill="#ffffff"/><rect x="4" y="10.6" width="12" height="2.8" rx="1.4" fill="#ffffff"/><rect x="4" y="15.7" width="7.5" height="2.8" rx="1.4" fill="#ffffff"/></svg></span>
+      <span class="brand-name">Study Engine</span>
+    </div>
+    <div class="top-mid">
+      <div class="picker">
+        <button class="picker-btn" id="docs-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="docs-menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+          <span class="t" id="docs-btn-title">Documents</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu" id="docs-menu" hidden></div>
+      </div>
+      <div class="modes" id="modes" role="radiogroup" aria-label="Mode">
+        <button type="button" role="radio" data-mode="study" aria-checked="false" title="Everything: questions, guide blocks and quizzes. Spelling and grammar get fixes; the rest gets questions.">Study</button>
+        <button type="button" role="radio" data-mode="write" aria-checked="false" title="Writing review, plus at most one question per paragraph">Write</button>
+        <button type="button" role="radio" data-mode="rehearse" aria-checked="false" title="Timed practice: nothing shows until time is up">Rehearse</button>
+        <button type="button" role="radio" data-mode="polish" aria-checked="false" title="Full writing review and rubric checks">Polish</button>
+      </div>
+    </div>
+    <div class="top-right">
+      <span class="ai-pill" id="ai-pill"><i></i><span id="ai-text">Connecting…</span></span>
+      <button class="icon-btn" id="settings-btn" type="button" aria-label="Settings" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      </button>
+      <button class="icon-btn" id="tour-btn" type="button" aria-label="How Study Engine works" title="How Study Engine works">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.1-2.4 3.6M12 17h.01"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <main class="main" id="main">
+      <div class="doc-wrap">
+        <div class="mode-banner" id="mode-banner" hidden></div>
+        <div class="view-switch" id="view-switch" hidden>
+          <button type="button" id="view-notes" aria-pressed="true">Notes</button>
+          <button type="button" id="view-guide" aria-pressed="false">Study guide</button>
+        </div>
+        <section id="editor-view">
+          <input class="doc-title" id="doc-title" aria-label="Document title" autocomplete="off">
+          <div class="meta" id="doc-meta"></div>
+          <div id="doc-boxes"></div>
+          <div class="editor" id="editor">
+            <div class="backdrop doc-text" id="backdrop" aria-hidden="true"></div>
+            <textarea class="doc-text" id="doc-text" aria-label="Document text" spellcheck="false"></textarea>
+          </div>
+        </section>
+        <section id="guide-view" hidden></section>
+      </div>
+      <footer class="doc-foot" id="doc-foot">
+        <span class="count" id="word-count"></span>
+        <span class="spacer"></span>
+        <span class="status" id="foot-status" role="status"></span>
+        <button class="btn btn-sm" id="quiz-me" type="button">Quiz me on this draft</button>
+        <button class="btn btn-sm btn-soft" id="live-check" type="button">Ask me questions</button>
+      </footer>
+    </main>
+
+    <aside class="panel" id="panel" aria-label="Study assistant">
+      <div class="panel-head">
+        <div class="ring" id="ring" aria-hidden="true">
+          <svg viewBox="0 0 58 58"><circle class="track" cx="29" cy="29" r="24" fill="none" stroke-width="6"/><circle class="val" id="ring-val" cx="29" cy="29" r="24" fill="none" stroke-width="6" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"/></svg>
+          <b id="ring-num">0/0</b>
+        </div>
+        <div>
+          <h2 id="ring-title">Concepts solid</h2>
+          <p id="ring-sub"></p>
+        </div>
+      </div>
+      <nav class="tabs" id="tabs" role="tablist" aria-label="Study assistant">
+        <button class="tab" type="button" role="tab" data-tab="review" id="tab-review">Review <span class="n" id="r-count" hidden></span></button>
+        <button class="tab" type="button" role="tab" data-tab="questions" id="tab-questions">Questions <span class="n" id="q-count" hidden></span></button>
+        <button class="tab" type="button" role="tab" data-tab="guide" id="tab-guide">Guide</button>
+        <button class="tab" type="button" role="tab" data-tab="practice" id="tab-practice">Practice</button>
+        <button class="tab" type="button" role="tab" data-tab="words" id="tab-words">Words</button>
+        <button class="tab" type="button" role="tab" data-tab="exam" id="tab-exam">Exam</button>
+      </nav>
+      <div class="panel-body" id="panel-body" role="tabpanel"></div>
+    </aside>
+  </div>
+</div>
+
+<dialog id="welcome" aria-labelledby="welcome-title"></dialog>
+<dialog id="drill" aria-labelledby="drill-title"></dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="../lib/text.js"></script>
+<script src="../lib/rules.js"></script>
+<script src="../lib/settings.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

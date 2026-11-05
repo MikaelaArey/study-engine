@@ -1,0 +1,13 @@
+{
+  "name": "study-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A study mode for a writing assistant: Socratic underlines, notes turned into a study guide, vocabulary coaching and exam rehearsal.",
+  "scripts": {
+    "start": "node server.js --open",
+    "serve": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

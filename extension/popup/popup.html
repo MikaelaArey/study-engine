@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Study Engine</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../pages.css">
+<style>
+  body { width: 320px; background: var(--surface); }
+  header { display: flex; align-items: center; gap: 10px; padding: 14px 16px 12px; border-bottom: 1px solid var(--line); }
+  header h1 { font-size: 15px; font-weight: 700; flex: 1; }
+  .body { padding: 6px 16px 14px; display: grid; gap: 12px; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .row.unavailable { cursor: default; }
+  .label { display: block; font-weight: 650; }
+  .row.unavailable .label { color: var(--ink-3); }
+  .desc { display: block; color: var(--ink-2); font-size: 12.5px; overflow-wrap: anywhere; }
+  .goal { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0 2px; font-weight: 650; font-size: 13.5px; }
+  .goal .select { width: auto; min-height: 32px; font-size: 13px; font-weight: 600; }
+  .ai { display: grid; gap: 8px; padding: 11px 12px; border-radius: 10px; background: var(--warn-soft); font-size: 13px; color: var(--ink); }
+  .ai b { color: var(--warn); }
+  .actions { display: grid; gap: 8px; }
+  .foot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--ink-3); }
+  .foot button { border: 0; background: none; padding: 2px 0; color: var(--brand-ink); font-weight: 650; font-size: 12.5px; }
+</style>
+</head>
+<body>
+  <header>
+    <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="2.8" rx="1.4" fill="#ffffff"/><rect x="4" y="10.6" width="12" height="2.8" rx="1.4" fill="#ffffff"/><rect x="4" y="15.7" width="7.5" height="2.8" rx="1.4" fill="#ffffff"/></svg></span>
+    <h1>Study Engine</h1>
+    <span class="pill pill-quiet" id="ai-pill"><i></i><span id="ai-text">…</span></span>
+  </header>
+  <div class="body">
+    <div>
+      <label class="row">
+        <span><span class="label">Check my writing</span><span class="desc" id="enabled-desc">On all sites</span></span>
+        <input type="checkbox" class="switch" id="enabled" role="switch" checked>
+      </label>
+      <label class="row" id="site-row">
+        <span><span class="label">On this site</span><span class="desc" id="site-name">&nbsp;</span></span>
+        <input type="checkbox" class="switch" id="site-enabled" role="switch" checked>
+      </label>
+      <label class="row" id="study-row">
+        <span><span class="label">Study mode here</span><span class="desc">Questions instead of fixes</span></span>
+        <input type="checkbox" class="switch" id="study" role="switch">
+      </label>
+      <label class="goal" id="goal-row">Goal here
+        <select class="select" id="goal"></select>
+      </label>
+    </div>
+
+    <div class="ai" id="ai-box" hidden>
+      <span><b>AI checks are off.</b> Built-in spelling, grammar and style checks are working. Add an Anthropic API key for grammar in context, tone, fact checks and study questions.</span>
+      <button class="btn btn-sm" id="add-key" type="button">Add a key</button>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary btn-block" id="open-editor" type="button">Open the editor</button>
+      <button class="btn btn-soft btn-block" id="open-assistant" type="button" hidden>Open the assistant for this page</button>
+    </div>
+    <div class="foot"><span id="usage"></span><button id="settings" type="button">Settings</button></div>
+  </div>
+  <script src="../lib/text.js"></script>
+  <script src="../lib/rules.js"></script>
+  <script src="../lib/settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

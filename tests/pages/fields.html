@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Study Engine test page</title>
+<style>
+  :root { --bg: #f7f7f5; --fg: #1d2125; --muted: #5d6670; --panel: #ffffff; --line: #d9dcdf; --accent: #15803d; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 28px 16px 80px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .muted { color: var(--muted); }
+  .field-label { display: block; font-weight: 600; margin: 22px 0 6px; }
+  textarea, input[type="text"], input[type="password"], .editable {
+    box-sizing: border-box; width: 100%; font: inherit; color: inherit; background: var(--panel);
+    border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px;
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  .editable { min-height: 110px; }
+  .scrollbox { height: 160px; overflow: auto; border: 1px dashed var(--line); padding: 8px; }
+  .spacer { height: 40vh; }
+  /* Gmail-like compose: lines as divs, a signature and a quoted reply */
+  .compose { min-height: 140px; }
+</style>
+<style id="hostile" media="not all">
+  * { font-family: "Courier New", monospace !important; letter-spacing: 1px !important; color: #b00 !important; }
+  div, span { padding: 6px !important; line-height: 2.2 !important; }
+  study-engine-ui { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Study Engine test page</h1>
+  <p class="muted">Type in the fields below. Misspellings, grammar and style problems get underlined.</p>
+
+  <label class="field-label" for="ta">Textarea</label>
+  <textarea id="ta" placeholder="Try: I recieve teh letter yesterday and it was very good."></textarea>
+
+  <label class="field-label" for="txt">Text input</label>
+  <input id="txt" type="text" placeholder="Try: Their is a apple on the table">
+
+  <span class="field-label" id="ce-label">Contenteditable</span>
+  <div id="ce" class="editable" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="ce-label"></div>
+
+  <span class="field-label" id="gm-label">Email-style editor (lines as divs, signature, quoted reply)</span>
+  <div id="gm" class="editable compose" contenteditable="true" role="textbox" aria-labelledby="gm-label"><div>Hi Sam,</div><div><br></div><div>Thanks for sending the notes.</div><div><br></div><div class="gmail_signature" data-smartmail="gmail_signature">Mikaela, Studnet Council</div><div class="gmail_quote"><blockquote>On Monday, Sam wrote: Here are teh notes.</blockquote></div></div>
+
+  <label class="field-label" for="pw">Password (never checked)</label>
+  <input id="pw" type="password" value="recieve teh">
+
+  <label class="field-label" for="opt">Opted out (data-gramm="false")</label>
+  <textarea id="opt" data-gramm="false">I recieve teh letter.</textarea>
+
+  <label class="field-label" for="code">Code editor stand-in</label>
+  <div class="cm-editor"><div id="code" contenteditable="true" class="cm-content">const recieve = teh;</div></div>
+
+  <span class="field-label">Scrolling container</span>
+  <div class="scrollbox" id="scrollbox"><div style="height:120px">Scroll down</div><textarea id="ta2">This sentance is inside a scrolling box.</textarea><div style="height:200px"></div></div>
+
+  <p><label><input type="checkbox" id="hostile-toggle"> Apply hostile page CSS</label></p>
+  <div class="spacer"></div>
+  <label class="field-label" for="bottom">Field near the bottom</label>
+  <textarea id="bottom"></textarea>
+</main>
+<script>
+  document.getElementById('hostile-toggle').addEventListener('change', (e) => {
+    document.getElementById('hostile').media = e.target.checked ? 'all' : 'not all';
+  });
+</script>
+</body>
+</html>

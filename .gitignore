@@ -1,0 +1,6 @@
+.env
+node_modules/
+.DS_Store
+
+# Business documents, kept private
+Study Engine x Grammarly.pdf

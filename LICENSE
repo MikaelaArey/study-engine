@@ -1,0 +1,13 @@
+Copyright (c) 2026 Mikaela Arey. All rights reserved.
+
+This software, including its source code, design and documentation, is
+proprietary. No part of it may be copied, modified, distributed, sublicensed,
+sold, or used to provide a hosted service, in whole or in part, without prior
+written permission from the copyright holder.
+
+Open-source components used by this software remain under their own licenses,
+with their license texts next to them:
+- SCOWL word lists: extension/data/LICENSE-SCOWL.txt
+- Figtree and IBM Plex Mono fonts (SIL Open Font License 1.1): LICENSE-*.txt in
+  extension/fonts and public/fonts
+- Quill, used only by the tests (BSD 3-Clause): tests/pages/vendor/quill/LICENSE
